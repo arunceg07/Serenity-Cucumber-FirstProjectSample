@@ -1,4 +1,4 @@
 package uk.gov.tax.testrsmnew.framework;
 
-public class RSMComonFunctions {
+public class TestLeafDBTest {
 }
