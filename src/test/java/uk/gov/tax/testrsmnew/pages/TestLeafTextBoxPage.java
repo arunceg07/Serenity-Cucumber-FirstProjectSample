@@ -108,17 +108,17 @@ public class TestLeafTextBoxPage extends PageObject {
             for (int i=0; i<12; i++){
                 WebElement E1 = getDriver().findElement(By.xpath("//a[@class='ui-datepicker-next ui-corner-all']//following::span[1]"));
                 WebElement E2 = getDriver().findElement(By.xpath("//a[@class=' ui-state-default' and text()='10']"));
-                TestLeafComonFunctions.javaWait(20000);
+//                TestLeafComonFunctions.javaWait(2000);
                  month = E1.getText();
                 System.out.println("month:-->"+i+E1.getText());
                 if (month.equalsIgnoreCase("May")){
                     E2.click();
-                    TestLeafComonFunctions.javaWait(5000);
+//                    TestLeafComonFunctions.javaWait(2000);
                     break;
                 }
                 TL_calendarNextButton.click();
             }
-            TestLeafComonFunctions.javaWait(9000);
+//            TestLeafComonFunctions.javaWait(5000);
             System.out.println("Calendar Confirmation-->"+TL_calendarDateTextBox.getText());
 
     }
