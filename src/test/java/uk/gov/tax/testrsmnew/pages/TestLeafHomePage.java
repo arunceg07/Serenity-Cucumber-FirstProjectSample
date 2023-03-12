@@ -19,5 +19,6 @@ public class TestLeafHomePage extends PageObject {
     public void TestLeafLoginSuccess() {
         TL_logo.isPresent();
         TestLeafComonFunctions.javascriptHighligther(TL_logo);
+        System.out.println("TestLeafLoginSuccess -->");
     }
 }
