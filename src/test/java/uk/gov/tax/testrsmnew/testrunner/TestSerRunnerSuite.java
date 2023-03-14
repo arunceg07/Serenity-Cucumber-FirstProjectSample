@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         glue = "uk.gov.tax.testrsmnew.steps.StepDefinitions",
-        features = "src/test/resources/features/TestLeafTable.feature",tags="@RegressionTestleaf"
+        features = "src/test/resources/features/JerseyAPITesting.feature",tags="@RegressionAPITest"
 )
 
 public class TestSerRunnerSuite {
