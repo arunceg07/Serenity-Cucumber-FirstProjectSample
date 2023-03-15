@@ -17,14 +17,3 @@ Feature: Home Function-Testing TestLeaf Website Features
     And User verifies the TextBox Functions of TestLeaf Portal
        #User verifies navigates to Text Box Page
     Then User verifies the Calendar in the TextBox Page
-
-#  @RSM-102
-#  Scenario: S1- RSM Email Page Function
-#    #Login in to RSM Portal
-#    Given User logs in to RSM UK Portal
-#     #User verifies the RSM Home Page Details
-#    And User verifies the RSM Home Page Details
-#     #User verifies the RSM Home Page Details
-#    And User verifies the RSM email preference page details
-#         #User verifies the RSM Home Page Details
-#    And User verifies the print statement

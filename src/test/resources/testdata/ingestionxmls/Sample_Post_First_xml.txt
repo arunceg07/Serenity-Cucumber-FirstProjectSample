@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Travelerinformation>
+  <id>1</id>
+  <name>string</name>
+  <email>stringb@mail.com</email>
+  <adderes>string</adderes>
+  <createdat>1970-01-01T00:00:00.001Z</createdat>
+</Travelerinformation>
