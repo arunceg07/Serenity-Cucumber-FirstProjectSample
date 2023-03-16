@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-        glue = "uk.gov.tax.testleafnew.steps.StepDefinitions",
-        features = "src/test/resources/features/RestAssuredXMLTesting.feature",tags="@RegressionXMLTest"
+        glue = "uk.gov.tax.testleafnew.steps",
+        features = "src/test/resources/features/TestLeafDBTest.feature",tags="@RegressionDBTest"
 )
 
 //@CucumberOptions(
