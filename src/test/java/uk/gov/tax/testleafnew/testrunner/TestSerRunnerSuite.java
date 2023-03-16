@@ -8,15 +8,15 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(CucumberWithSerenity.class)
+//@CucumberOptions(
+//        glue = "uk.gov.tax.testleafnew.steps",
+//        features = "src/test/resources/features/TestLeafDBTest.feature",tags="@RegressionDBTest"
+//)
+
 @CucumberOptions(
         glue = "uk.gov.tax.testleafnew.steps",
-        features = "src/test/resources/features/TestLeafDBTest.feature",tags="@RegressionDBTest"
+        features = "src/test/resources/features/"
 )
-
-//@CucumberOptions(
-//        glue = "uk.gov.tax.testleafnew.steps.StepDefinitions",
-//        features = "src/test/resources/features/"
-//)
 
 public class TestSerRunnerSuite {
 
