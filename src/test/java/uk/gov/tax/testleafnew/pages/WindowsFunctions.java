@@ -1,8 +1,11 @@
 package uk.gov.tax.testleafnew.pages;
 
+import net.serenitybdd.core.pages.PageObject;
+import net.serenitybdd.core.pages.WebElementFacade;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.tax.testleafnew.framework.TestLeafComonFunctions;
@@ -10,20 +13,26 @@ import uk.gov.tax.testleafnew.framework.TestLeafComonFunctions;
 import javax.mail.Folder;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
+import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
 
-public class WindowsFunctions {
+
+public class WindowsFunctions extends PageObject {
     TestLeafComonFunctions TestLeafComonFunctions = new TestLeafComonFunctions();
-
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowsFunctions.class);
+    public static List FirstList = new ArrayList<Object>();
+    public static List secondList = new ArrayList<Object>();
 
     /**
-     * Method to Upload a File
+     * Method to Upload a File using Robot Class
      */
 
     public void windowsFileuploadRobot()  {
@@ -55,7 +64,27 @@ public class WindowsFunctions {
     }
 
     /**
-     * Method to verify a Downloaded File in a windows File path
+     * Method to find a postion of a coloumn in a webtable
+     * @param columnName
+     * @return
+     */
+
+    public int homePageColoumHeaderPosition(String columnName) {
+
+//        CFDCTMTEST = new CFSDCTMTest();
+        int position =0;
+//        ArrayList<String> columns = new ArrayList<>();
+//        for (int i=0; i< $$("//div[@class='x-column-header-text']//span").size(); i++){
+//            if($$("//div[@role='columnheader']").get(i).getAttribute("aria-hidden").equals("false")) {
+//                columns.add($$("//div[@role='columnheader']").get(i).gettext());
+//            }
+//            position = columns.indexOf(columnName);
+//        }
+//
+        return position+1;
+    }
+    /**
+     * Method to verify a Downloaded File (Multiple file names passed in input and verified, hashmap datatable and list conecpt) in a windows File path
      */
     public void windowsFileDownloadVerify(List<String> data){
 
@@ -78,6 +107,70 @@ public class WindowsFunctions {
         }
 
     }
+
+    /**
+     * Method to open the copied url in new window
+     * @throws IOException
+     * @throws UnsupportedFlavorException
+     */
+    public void opensCopiedUrlInNewWindow() throws IOException, UnsupportedFlavorException{
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Clipboard clipboard = toolkit.getSystemClipboard();
+        String actualCopiedText = (String) clipboard.getData(DataFlavor.stringFlavor);
+        System.out.println("url from Clipboard:"+ actualCopiedText);
+//        dcmLoginPage.openUrl("http://10.179.24.230:8080/Casefow");
+    }
+
+    /**
+     * Method to find a search document exist in the page, no result found xpath is key here
+     * @param deleteFlag
+     */
+    public void checkdeleteddocumentfoundornot(boolean deleteFlag) {
+//        String documentTitle = DataIngestionPage.newDocumentTitleValue;
+//        CFSDCTMTest.wait(4000);
+//        CFSDCTMTest.movetowebelement(getDriver(), navSearch);
+//        navSearch.waituntilClickable();
+//        CFSDCTMTest.javaScriptClick(getDriver(), navSearch);
+//        CFSDCTMTest.wait(2000);
+//        if(deleteFlag){
+//            Assert.assertTrue($$("//div[text()='No results found.']]").isDisplayed());
+//        }
+
+        }
+
+    /**
+     * compare no of documents in source and destination
+     * @param documentTitle
+     * @throws Throwable
+     */
+    public void verifyViewVersionDestFiles(String documentTitle) throws Throwable {
+
+//        setImplicitTimeout(20,SECONDS);
+//        CFSDCTMTest.wait(2000);
+        WebElementFacade fileNameValue = $(By.xpath("//font[text()='"+documentTitle+"']"));
+        String viewVersionCol = "table>tbody>tr:nth-child(1)>td:nth-child(1)>div";
+        List<WebElementFacade> viewVersionCollist = $$(By.cssSelector(viewVersionCol));
+        fileNameValue.isDisplayed();
+
+        Assert.assertTrue(fileNameValue.getText().trim().equalsIgnoreCase(documentTitle));
+        //source Folder Documents
+        for(int i=0; i< viewVersionCollist.size(); i++){
+
+            secondList.add(viewVersionCollist.get(i).getText());
+
+        }
+       //Destination folder documents
+        for(int i=0; i< viewVersionCollist.size(); i++){
+
+            FirstList.add(viewVersionCollist.get(i).getText());
+
+        }
+
+        Assert.assertTrue(FirstList.size()==secondList.size() && FirstList.containsAll(secondList) && secondList.containsAll(FirstList));
+
+        resetImplicitTimeout();
+    }
+
 
     /**
      * Method to read a String in a file
