@@ -19,8 +19,10 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import org.openqa.selenium.support.Color;
 
 import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
 
@@ -169,6 +171,36 @@ public class WindowsFunctions extends PageObject {
         Assert.assertTrue(FirstList.size()==secondList.size() && FirstList.containsAll(secondList) && secondList.containsAll(FirstList));
 
         resetImplicitTimeout();
+    }
+
+    /**
+     * Method to validate highligted serached text in a page by using CSS properties and selenium color import class
+     * @param doctTitle
+     */
+    public void highlightSearchText(String doctTitle) {
+
+//        CFSDCTMTest = new CFSDCTMTest();
+//        setImplicitTimeout(10, SECONDS);
+//        navsearch.waituntilvisible();
+//        CFSDCTMTest.movetowebelement(getDriver(), navsearch);
+//        CFSDCTMTest.javascriptclick(getDriver(), navsearch);
+//        documentTitleInput.waituntilvisible();
+//        CFSDCTMTest.javascriptclick(getDriver(), documentTitleInput);
+//        documentTitleInput.clear();
+//        documentTitleInput.sendKeys(doctTitle);
+//        CFSDCTMTest.wait(2000);
+//        CFSDCTMTest.movetowebelement(getDriver(), navsearch);
+//        CFSDCTMTest.javascriptclick(getDriver(), navsearch);
+//        CFSDCTMTest.wait(4000);
+
+        List<WebElementFacade> searchListText = $$(By.xpath("//span[@class='xcp_grid_matchingterms-cls'][text()]"));
+        LOGGER.info("searchlistsize"+ searchListText.size() );
+        for (int i =0; i<searchListText.size(); i++){
+            LOGGER.info("searchListTextList.get(i).getText():"+i+"-->"+searchListText.get(i).getText());
+            String CssRbgValue = searchListText.get(i).getCssValue("background-color");
+            String CSSToHex = Color.fromString(CssRbgValue).asHex();
+            Assert.assertTrue(CSSToHex.equalsIgnoreCase("#ffffaa"));
+        }
     }
 
 
