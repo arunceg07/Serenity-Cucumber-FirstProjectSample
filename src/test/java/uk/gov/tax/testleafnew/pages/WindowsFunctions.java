@@ -4,8 +4,11 @@ import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.tax.testleafnew.framework.TestLeafComonFunctions;
@@ -85,6 +88,44 @@ public class WindowsFunctions extends PageObject {
 //
         return position+1;
     }
+
+    /**
+     * Method to verify a single downloaded file present in windows directory
+     * @param userPID
+     * @param fileName
+     * @param folderName
+     */
+    public void verifyCFSDownloadorCheckoutFiles(String userPID,String fileName, String folderName){
+//        String userID = dcmLoginPage.loginUserPID(userPID);
+//        LOGGER.info ("userID: "+ userID);
+//        File folder;
+
+//        if (folderName.equalsIgnoreCase("checkout")){
+//            folder = new File("D:\\Users\\"+userID+"OneDrive-HM Revenue & Customs\\Documentum\\checkout");
+//        }else {
+//            folder = new File("D:\\Users\\"+userID+"OneDrive-HM Revenue & Customs\\Documentum\\download");
+//        }
+//        boolean found = false;
+//        File[] listofFiles = folder.listFiles();
+//        int noofFiles = listofFiles.length;
+//        for (File listofFile : listofFiles) {
+//
+//            if (listofFile.isFile()){
+//                String filename = listofFile.getName();
+//                if (fileName.contains(fileName)){
+//                        found = true;
+//                    LOGGER.info ("\n"+"the filename is found"+ fileName);
+//                    folder.deleteOnExit();
+//                    break;
+//                    }
+//            }
+//        }
+//        Assert.assertTrue("Downloaded document is not found", found);
+//        for (int i =0; i<listofFiles.length-1; i++){
+//            listofFiles[i]=null;
+//            folder.listFiles()[i]=null;
+//        }
+    }
     /**
      * Method to verify a Downloaded File (Multiple file names passed in input and verified, hashmap datatable and list conecpt) in a windows File path
      */
@@ -102,10 +143,18 @@ public class WindowsFunctions extends PageObject {
 
                     if (fileName.contains(data.get(j))){
                         found = true;
+                   LOGGER.info ("\n"+"the filename is found"+ fileName);
+                    folder.deleteOnExit();
+                    break;
                     }
 
                 }
             }
+        }
+        Assert.assertTrue("Downloaded document is not found", found);
+                for (int i =0; i<listofFiles.length-1; i++){
+            listofFiles[i]=null;
+            folder.listFiles()[i]=null;
         }
 
     }
@@ -205,7 +254,7 @@ public class WindowsFunctions extends PageObject {
 
 
     /**
-     * Method to read a String in a file
+     * Method to read a String in a single file
      */
 
     public void readStringinFile(String docFileName){
@@ -270,5 +319,202 @@ public class WindowsFunctions extends PageObject {
             folder.listFiles()[i]=null;
         }
     }
+
+    /**
+     * Method to append string in a single file
+     * @param userPID
+     * @param docFileName
+     * @throws IOException
+     */
+
+    public void appendStrToFile(String userPID, String docFileName) throws IOException{
+
+        File folder = new File("C:\\Users\\Arun Kumar Devarajan\\Downloads");
+        boolean found = false;
+        String fileName = null;
+        String fileToWrite = null;
+        String fileExtension = null;
+        File[] listofFiles = folder.listFiles();
+        int noofFiles = listofFiles.length;
+        for (File listofFile : listofFiles) {
+
+            if (listofFile.isFile()){
+                fileName = listofFile.getName();
+
+                if (fileName.contains(docFileName)){
+                    found = true;
+                    fileExtension = fileName.substring(fileName.lastIndexOf(".")+1);
+                    LOGGER.info("fileExtension-->"+fileExtension);
+                    break;
+                }
+            }
+        }
+
+        Assert.assertTrue(found);
+        fileToWrite = folder+"\\"+docFileName+"."+fileExtension;
+        LOGGER.info("fileToWrite-->"+fileToWrite);
+        if (fileExtension.contains("txt")){
+            try {
+              // open given file in Append Mode
+                BufferedWriter out = new BufferedWriter(new FileWriter(fileName, true));
+                out.newLine();
+                out.write("appendText");
+                out.flush();
+                LOGGER.info("out.write completed");
+                out.close();
+                }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (fileExtension.contains("docx")){
+            try {
+                XWPFDocument doc = new XWPFDocument(new FileInputStream(fileToWrite));
+                XWPFParagraph p1 = doc.createParagraph();
+                XWPFRun r1  = p1.createRun();
+                r1.addBreak();
+                r1.setBold(true);
+                r1.setItalic(true);
+                r1.setItalic(true);
+                r1.setFontSize(12);
+                r1.setText("appendtext");
+                r1.setFontFamily("Courier");
+                //save the docs
+                try(FileOutputStream out = new FileOutputStream(fileName)){
+                    doc.write(out);
+                    doc.close();
+                    LOGGER.info("\n"+"file appended");
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        for (int i=0;i< listofFiles.length;i++){
+            listofFiles[i]=null;
+            folder.listFiles()[i]=null;
+        }
+
+    }
+
+    /**
+     * Method to append string to Bulk files
+     * @param userPID
+     * @param data
+     * @throws IOException
+     */
+    public void appendStrToBulkFiles(String userPID, List<String> data) throws IOException {
+
+        File folder = new File("C:\\Users\\Arun Kumar Devarajan\\Downloads");
+        boolean found = false;
+        String fileName = null;
+        String fileToWrite = null;
+        String fileExtension = null;
+        File[] listofFiles = folder.listFiles();
+        int noofFiles = listofFiles.length;
+        for (File listofFile : listofFiles) {
+
+            if (listofFile.isFile()) {
+                fileName = listofFile.getName();
+                for (int j = 0; j < data.size(); j++) {
+
+                    if (fileName.contains(data.get(j))) {
+                        found = true;
+                        fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+                        LOGGER.info("fileExtension-->" + fileExtension);
+                        Assert.assertTrue(found);
+                        fileToWrite = folder + "\\" + data.get(j) + "." + fileExtension;
+                        LOGGER.info("fileToWrite-->" + fileToWrite);
+                        if (fileExtension.contains("txt")) {
+                            try {
+                                // open given file in Append Mode
+                                BufferedWriter out = new BufferedWriter(new FileWriter(fileName, true));
+                                out.newLine();
+                                out.write("appendText");
+                                out.flush();
+                                LOGGER.info("out.write completed");
+                                out.close();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
+                        if (fileExtension.contains("docx")) {
+                            try {
+                                XWPFDocument doc = new XWPFDocument(new FileInputStream(fileToWrite));
+                                XWPFParagraph p1 = doc.createParagraph();
+                                XWPFRun r1 = p1.createRun();
+                                r1.addBreak();
+                                r1.setBold(true);
+                                r1.setItalic(true);
+                                r1.setItalic(true);
+                                r1.setFontSize(12);
+                                r1.setText("appendtext");
+                                r1.setFontFamily("Courier");
+                                //save the docs
+                                try (FileOutputStream out = new FileOutputStream(fileName)) {
+                                    doc.write(out);
+                                    doc.close();
+                                    LOGGER.info("\n" + "file appended");
+                                }
+
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        break;
+                    }
+                }
+
+            }
+        }
+        Assert.assertTrue("Downloaded document is not found", found);
+        for (int i = 0; i < listofFiles.length; i++) {
+            listofFiles[i] = null;
+            folder.listFiles()[i] = null;
+        }
+    }
+
+
+
+    /**
+     * Method to select multiple documents in a webtable action class importance
+     * @param data
+     */
+  public void selectMultipleDocsinLandingPage(List<String> data){
+//        CFSDCTMTEST = new CFDCTMTEST();
+//        setImplicitTimeout(10, SECONDS);
+//        documentTitleInput.clear();
+//        CFSDCTMTest.movetowebelement(getDriver(), navSearch);
+//        navSearch.waituntilClickable();
+//        CFSDCTMTest.javaScriptClick(getDriver(), navSearch);
+//        CFSDCTMTest.wait(2000);
+//      CFSDCTMTEST.wait(3000);
+
+//      String docTitlePath = "table>tbody>tr:nth-child(1)>td:nth-child(3)";
+//      List<WebElementFacade> docTitleList = $$(By.cssSelector(docTitlePath));
+//      List<WebElementFacade> docTable = $$(By.xpath("//table/tbody/tr/td[7]"));
+//
+//      Actions ac = new Actions(getDriver());
+//      ac.keyDown(Keys.CONTROL).perform();
+//      CFSDCTMTEST.wait(1000);
+//      ac.click(docTable.get(0).keyDown(Keys.CONTROL).keyUp(Keys.CONTROL).build().perform);
+//      CFSDCTMTEST.wait(2000);
+//
+//      for (int i =0; i< data.size(); i++){
+//          LOGGER.info("fileName:"+i+"-->"+data.get(i));
+//          for (int j =0; j< data.size(); j++){
+//              if (docTitleList.get(j).getText().trim().equalsIgnoreCase(data.get(j))){
+//                  ac.click(docTable.get(j).keyDown(Keys.CONTROL).keyUp(Keys.CONTROL).build().perform());
+//                  CFSDCTMTEST.wait(2000);
+//              }
+//          }
+//      }
+//
+//      ac.keyUp(Keys.CONTROL).build().perform();
+  }
+
 
    }

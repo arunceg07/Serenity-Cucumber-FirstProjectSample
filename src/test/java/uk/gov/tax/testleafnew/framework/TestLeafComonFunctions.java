@@ -58,4 +58,8 @@ public class TestLeafComonFunctions extends PageObject {
     public void javaScriptClick(WebDriver driver, WebElement element){
         ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
     }
+
+    public void refreshPage(WebDriver driver){
+        driver.navigate().refresh();
+    }
 }
