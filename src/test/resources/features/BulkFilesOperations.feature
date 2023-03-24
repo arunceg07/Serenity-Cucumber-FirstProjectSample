@@ -1,6 +1,6 @@
 ###########################################################################################################################################################
 #
-@RegressionTestleaf
+@RegressionTestleafBulk
 Feature: Home Function-Testing TestLeaf Website Features
   AS a TestLeaf User
   I WANT TO Test the Bulk Files Operations
