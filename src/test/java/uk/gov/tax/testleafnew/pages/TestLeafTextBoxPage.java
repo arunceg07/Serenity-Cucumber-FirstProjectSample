@@ -64,7 +64,7 @@ public class TestLeafTextBoxPage extends PageObject {
         TL_city.clear();
         TL_city.sendKeys("Coimbatore");
         Assert.assertTrue(TL_disableTextBox.isDisabled());
-        TestLeafComonFunctions.javascriptScroller();
+        TestLeafComonFunctions.javascriptScroller("1000");
         TestLeafComonFunctions.javaWait(2000);
         TestLeafComonFunctions.javascriptHighligther(TL_TextEditorlabel);
         System.out.println("Test1");

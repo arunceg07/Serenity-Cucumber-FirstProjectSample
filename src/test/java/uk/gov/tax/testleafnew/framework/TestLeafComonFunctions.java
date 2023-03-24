@@ -16,9 +16,13 @@ public class TestLeafComonFunctions extends PageObject {
         }
     }
 
-    public void javascriptScroller(){
+    public void javascriptScroller(String scrollparameter){
         JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
-        jsExecutor.executeScript("window.scrollBy(0,1000)");
+//        jsExecutor.executeScript("window.scrollBy(0,1000)");
+
+        String arg = "window.scrollBy(0,"+scrollparameter+")";
+        System.out.println("scrollarg-->"+ arg);
+        jsExecutor.executeScript(arg);
     }
 
     public void seleniumClick(WebElement webElement){
