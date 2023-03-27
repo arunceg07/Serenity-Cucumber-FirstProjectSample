@@ -17,14 +17,14 @@ import org.junit.runner.RunWith;
 //        glue = "uk.gov.tax.testleafnew.steps",
 //        features = "src/test/resources/features",tags="@RegressionTestleaf or @RegressionAPITest or @RegressionJerseyXMLTesting or @RegressionReport")
 
-@CucumberOptions(
-        glue = "uk.gov.tax.testleafnew.steps",
-        features = "src/test/resources/features", tags = "@RegressionTestleaf,@RegressionReport")
-
 //@CucumberOptions(
 //        glue = "uk.gov.tax.testleafnew.steps",
-//        features = "src/test/resources/features/"
-//)
+//        features = "src/test/resources/features", tags = "@RegressionTestleaf,@RegressionReport")
+
+@CucumberOptions(
+        glue = "uk.gov.tax.testleafnew.steps",
+        features = "src/test/resources/features/"
+)
 
 public class TestSerRunnerSuite {
 
