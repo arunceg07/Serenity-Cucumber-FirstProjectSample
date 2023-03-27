@@ -18,6 +18,7 @@ public class TestLeafHomePageSteps {
         // Write code here that turns the phrase above into concrete actions
         TestLeafHomePage.open("contentURL",withParameters(""));
         System.out.println("homePage.open()--> This Lanuches the ChromeDriver and Website");
+        System.out.println("Jenkins Automation1");
     }
 
     @Given("^User verifies the HomePage of TestLeaf Portal$")
@@ -25,6 +26,7 @@ public class TestLeafHomePageSteps {
         // Write code here that turns the phrase above into concrete actions
         TestLeafHomePage.TestLeafLoginSuccess();
         System.out.println("User logs in to TestLeaf Portal successfully");
+        System.out.println("Jenkins Automation2");
     }
 
 
